@@ -40,7 +40,7 @@ export function SettingsPanel({ settings, onChange, onClearKeys, onClose }: Prop
             value={settings.enhanceProvider}
             onChange={(e) => onChange("enhanceProvider", e.target.value as Settings["enhanceProvider"])}
           >
-            <option value="groq">Groq — llama-3.1-8b-instant</option>
+            <option value="groq">Groq — openai/gpt-oss-20b</option>
             <option value="gemini">Google Gemini (запасной)</option>
             <option value="none">Выключить (показывать сырой текст)</option>
           </select>

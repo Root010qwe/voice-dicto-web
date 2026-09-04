@@ -3,7 +3,7 @@ import { EnhanceError } from "./enhanceProvider";
 
 export const groqEnhanceProvider: EnhanceProvider = {
   id: "groq",
-  label: "Groq (llama-3.1-8b-instant)",
+  label: "Groq (openai/gpt-oss-20b)",
   async enhance(rawText, systemPrompt, apiKey) {
     if (!apiKey) throw new EnhanceError("Не задан ключ Groq API");
 
@@ -16,7 +16,7 @@ export const groqEnhanceProvider: EnhanceProvider = {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          model: "llama-3.1-8b-instant",
+          model: "openai/gpt-oss-20b",
           temperature: 0.2,
           messages: [
             { role: "system", content: systemPrompt },

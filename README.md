@@ -21,7 +21,7 @@
 Приложение работает с вашим личным бесплатным ключом одного из провайдеров:
 
 - **Groq** (рекомендуется, быстрее всего) — бесплатный ключ на [console.groq.com/keys](https://console.groq.com/keys).
-  STT: `whisper-large-v3-turbo`. Enhance: `llama-3.1-8b-instant`.
+  STT: `whisper-large-v3-turbo`. Enhance: `openai/gpt-oss-20b`.
 - **Google AI Studio (Gemini)** — запасной вариант, бесплатный ключ на
   [aistudio.google.com/app/apikey](https://aistudio.google.com/app/apikey). Модель: `gemini-2.0-flash`.
 
