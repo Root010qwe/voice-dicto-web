@@ -1,10 +1,125 @@
+.layout {
+  min-height: 100%;
+  display: grid;
+  grid-template-columns: 220px minmax(0, 640px) 220px;
+  gap: 24px;
+  align-items: start;
+  justify-content: center;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 24px 20px 40px;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+    max-width: 640px;
+  }
+}
+
 .app {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 24px 20px 40px;
+}
+
+.side-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 18px;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  position: sticky;
+  top: 24px;
+}
+
+@media (max-width: 980px) {
+  .side-panel {
+    position: static;
+  }
+}
+
+.side-panel h2 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-dim);
+  margin: 18px 0 10px;
+}
+
+.side-panel h2:first-child {
+  margin-top: 0;
+}
+
+.side-panel p {
+  margin: 0 0 4px;
+  line-height: 1.45;
+}
+
+.steps-list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.5;
+  color: var(--text);
+}
+
+.steps-list li + li {
+  margin-top: 6px;
+}
+
+.about-list {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.5;
+}
+
+.about-list li + li {
+  margin-top: 6px;
+}
+
+.style-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.style-pill {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.style-pill:hover {
+  border-color: var(--accent);
+}
+
+.style-pill--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.style-custom-prompt {
+  width: 100%;
+  margin-top: 10px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 0.85rem;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.style-custom-prompt:focus {
+  outline: none;
+  border-color: var(--accent);
 }
 
 .app-header {

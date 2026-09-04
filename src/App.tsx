@@ -9,6 +9,8 @@ import { RecordButton } from "./ui/RecordButton";
 import { SettingsPanel } from "./ui/SettingsPanel";
 import { ResultView, type AppPhase } from "./ui/ResultView";
 import { HistoryList } from "./ui/HistoryList";
+import { QuickStartPanel } from "./ui/QuickStartPanel";
+import { AboutPanel } from "./ui/AboutPanel";
 
 function App() {
   const { settings, update, clearKeys } = useSettings();
@@ -94,50 +96,56 @@ function App() {
   const isBusy = phase === "transcribing" || phase === "enhancing";
 
   return (
-    <div className="app">
-      <header className="app-header">
-        <h1>Voice Dicto</h1>
-        <button
-          type="button"
-          className="icon-button"
-          onClick={() => setShowSettings(true)}
-          aria-label="Настройки"
-        >
-          ⚙
-        </button>
-      </header>
+    <div className="layout">
+      <QuickStartPanel settings={settings} onChange={update} />
 
-      <main className="app-main">
-        {!canRecord && (
-          <p className="app-notice">
-            Чтобы начать, откройте настройки и вставьте бесплатный API-ключ (Groq или Gemini).
+      <div className="app">
+        <header className="app-header">
+          <h1>Voice Dicto</h1>
+          <button
+            type="button"
+            className="icon-button"
+            onClick={() => setShowSettings(true)}
+            aria-label="Настройки"
+          >
+            ⚙
+          </button>
+        </header>
+
+        <main className="app-main">
+          {!canRecord && (
+            <p className="app-notice">
+              Чтобы начать, откройте настройки и вставьте бесплатный API-ключ (Groq или Gemini).
+            </p>
+          )}
+
+          <RecordButton
+            isRecording={recorder.status === "recording"}
+            disabled={isBusy || (!canRecord && recorder.status !== "recording")}
+            onClick={handleRecordClick}
+          />
+
+          {recorder.error && <p className="app-notice app-notice--error">{recorder.error}</p>}
+
+          <ResultView
+            phase={phase}
+            rawText={rawText}
+            enhancedText={enhancedText}
+            errorMessage={errorMessage}
+          />
+
+          <HistoryList entries={history} onClear={handleClearHistory} onSelect={handleSelectHistory} />
+        </main>
+
+        <footer className="app-footer">
+          <p>
+            Статичный сайт на GitHub Pages. Работает только пока вкладка открыта — глобального
+            системного хоткея, как в нативных приложениях, здесь нет.
           </p>
-        )}
+        </footer>
+      </div>
 
-        <RecordButton
-          isRecording={recorder.status === "recording"}
-          disabled={isBusy || (!canRecord && recorder.status !== "recording")}
-          onClick={handleRecordClick}
-        />
-
-        {recorder.error && <p className="app-notice app-notice--error">{recorder.error}</p>}
-
-        <ResultView
-          phase={phase}
-          rawText={rawText}
-          enhancedText={enhancedText}
-          errorMessage={errorMessage}
-        />
-
-        <HistoryList entries={history} onClear={handleClearHistory} onSelect={handleSelectHistory} />
-      </main>
-
-      <footer className="app-footer">
-        <p>
-          Статичный сайт на GitHub Pages. Работает только пока вкладка открыта — глобального
-          системного хоткея, как в нативных приложениях, здесь нет.
-        </p>
-      </footer>
+      <AboutPanel />
 
       {showSettings && (
         <div className="modal-overlay" onClick={() => setShowSettings(false)}>
