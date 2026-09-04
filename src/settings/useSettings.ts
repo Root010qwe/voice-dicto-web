@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { SttProviderId } from "../stt/sttProvider";
 import type { EnhanceProviderId } from "../enhance/enhanceProvider";
 import type { EnhanceModeId } from "../enhance/prompts";
+import { DEFAULT_GROQ_API_KEY, DEFAULT_GEMINI_API_KEY } from "../config/defaultKeys";
 
 export interface Settings {
   sttProvider: SttProviderId;
@@ -16,8 +17,8 @@ export interface Settings {
 const DEFAULT_SETTINGS: Settings = {
   sttProvider: "groq",
   enhanceProvider: "groq",
-  groqApiKey: "",
-  geminiApiKey: "",
+  groqApiKey: DEFAULT_GROQ_API_KEY,
+  geminiApiKey: DEFAULT_GEMINI_API_KEY,
   language: "ru",
   enhanceMode: "clean",
   customPrompt: "",
@@ -50,9 +51,5 @@ export function useSettings() {
     setSettings((prev) => ({ ...prev, [key]: value }));
   }, []);
 
-  const clearKeys = useCallback(() => {
-    setSettings((prev) => ({ ...prev, groqApiKey: "", geminiApiKey: "" }));
-  }, []);
-
-  return { settings, update, clearKeys };
+  return { settings, update };
 }

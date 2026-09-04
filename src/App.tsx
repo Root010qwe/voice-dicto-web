@@ -6,20 +6,18 @@ import { sttProviders, SttError } from "./stt";
 import { enhanceProviders, EnhanceError, resolveSystemPrompt } from "./enhance";
 import { addHistoryEntry, clearHistory, loadHistory, type HistoryEntry } from "./storage/history";
 import { RecordButton } from "./ui/RecordButton";
-import { SettingsPanel } from "./ui/SettingsPanel";
 import { ResultView, type AppPhase } from "./ui/ResultView";
 import { HistoryList } from "./ui/HistoryList";
 import { QuickStartPanel } from "./ui/QuickStartPanel";
 import { AboutPanel } from "./ui/AboutPanel";
 
 function App() {
-  const { settings, update, clearKeys } = useSettings();
+  const { settings, update } = useSettings();
   const recorder = useRecorder();
   const [phase, setPhase] = useState<AppPhase>("idle");
   const [rawText, setRawText] = useState("");
   const [enhancedText, setEnhancedText] = useState("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [showSettings, setShowSettings] = useState(false);
   const [history, setHistory] = useState<HistoryEntry[]>(() => loadHistory());
 
   const activeApiKey = settings.sttProvider === "groq" ? settings.groqApiKey : settings.geminiApiKey;
@@ -76,10 +74,7 @@ function App() {
       if (blob) await runPipeline(blob);
       return;
     }
-    if (!canRecord) {
-      setShowSettings(true);
-      return;
-    }
+    if (!canRecord) return;
     setPhase("idle");
     setErrorMessage(null);
     await recorder.start();
@@ -102,21 +97,11 @@ function App() {
       <div className="app">
         <header className="app-header">
           <h1>Voice Dicto</h1>
-          <button
-            type="button"
-            className="icon-button"
-            onClick={() => setShowSettings(true)}
-            aria-label="Настройки"
-          >
-            ⚙
-          </button>
         </header>
 
         <main className="app-main">
           {!canRecord && (
-            <p className="app-notice">
-              Чтобы начать, откройте настройки и вставьте бесплатный API-ключ (Groq или Gemini).
-            </p>
+            <p className="app-notice">Ключ API недоступен. Попробуйте обновить страницу позже.</p>
           )}
 
           <RecordButton
@@ -146,19 +131,6 @@ function App() {
       </div>
 
       <AboutPanel />
-
-      {showSettings && (
-        <div className="modal-overlay" onClick={() => setShowSettings(false)}>
-          <div onClick={(e) => e.stopPropagation()}>
-            <SettingsPanel
-              settings={settings}
-              onChange={update}
-              onClearKeys={clearKeys}
-              onClose={() => setShowSettings(false)}
-            />
-          </div>
-        </div>
-      )}
     </div>
   );
 }

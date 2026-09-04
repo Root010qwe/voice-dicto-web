@@ -18,8 +18,7 @@ export function QuickStartPanel({ settings, onChange }: Props) {
     <aside className="side-panel side-panel--left">
       <h2>Быстрый старт</h2>
       <ol className="steps-list">
-        <li>Откройте ⚙ и вставьте бесплатный ключ Groq или Gemini — один раз.</li>
-        <li>Нажмите «Начать запись» и продиктуйте текст.</li>
+        <li>Нажмите «Начать запись» и продиктуйте текст — ключ уже встроен, ничего вводить не нужно.</li>
         <li>Нажмите ещё раз, чтобы остановить.</li>
         <li>Дождитесь обработки и скопируйте готовый текст.</li>
       </ol>
